@@ -1,4 +1,4 @@
-package com.notary.app.configserver;
+package com.joga.app.configserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

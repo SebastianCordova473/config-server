@@ -1,4 +1,4 @@
-package com.notary.app.configserver;
+package com.joga.app.configserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

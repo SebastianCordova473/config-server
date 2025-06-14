@@ -1,4 +1,4 @@
-package com.notary.app.configserver;
+package com.joga.app.configserver;
 
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;

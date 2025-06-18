@@ -1,31 +1,24 @@
-# Stage 1: Build the application using Amazon Corretto 21
-FROM amazoncorretto:21 as builder
+# ----------- STAGE 1: Build -----------
+FROM eclipse-temurin:21-jdk-alpine AS builder
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the Gradle wrapper and build files
 COPY gradle/ gradle/
 COPY build.gradle settings.gradle gradlew ./
 RUN chmod +x gradlew
-
-# Copy the source code
 COPY src/ src/
 
-# Build the application
 RUN ./gradlew bootJar --no-daemon
 
-# Stage 2: Use Amazon Corretto 21 as the base image
-FROM amazoncorretto:21
+# ----------- STAGE 2: Runtime -----------
+FROM eclipse-temurin:21-jdk-alpine
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the built JAR file from the build stage
 COPY --from=builder /app/build/libs/configserver-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose the application port
+ENV JAVA_OPTS="-Xms256m -Xmx512m"
+
 EXPOSE 8888
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
